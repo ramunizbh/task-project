@@ -1,0 +1,31 @@
+<div class="main">
+    <div style="margin-top: 1em;" class="mb-20">
+      <input  #taskInput type="text" placeholder="Nova tarefa"/>
+      <button (click)="addTask(taskInput.value); taskInput.value = ''" class="ml-10">Add Task</button>
+    </div>
+    <div class="mb-20">
+        <label for="filter">Filter: </label>
+        <select id="filter" (change)="setFilter($event.target.value)">
+          <option value="all">All</option>
+          <option value="Completed">Completed</option>
+          <option value="Incomplete">Incomplete</option>
+        </select>
+    </div>
+    <div class="center">Tasks</div>
+    <ul>
+      <li *ngFor="let task of filteredTasks$ | async" class="mb-10">
+        <!-- <button (click)="removeTask(task)" class="mr-10 bgc-red" >Delete</button> -->
+        <button (click)="removeTask(task)" class="mr-10" title="Delete">🗑️</button>
+        <label>
+          <input
+            type="checkbox"
+            [checked]="task.completed"
+            (change)="toggleTask(task)"
+          />
+          <span [style.text-decoration]="task.completed ? 'line-through' : 'none'" [style.color]="task.completed ? 'green' : 'black'">
+            {{ task.description }} 
+          </span>
+        </label>
+      </li>
+    </ul>
+</div>    
